@@ -6,7 +6,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Adding the context
 // Basic EF configuration
-builder.Services.AddDbContext<TasksContext>(opt => opt.UseInMemoryDatabase("TasksDB"));
+// builder.Services.AddDbContext<TasksContext>(opt => opt.UseInMemoryDatabase("TasksDB"));
+
+// Config SQLserver
+builder.Services.AddSqlServer<TasksContext>("Data Source=DESKTOP-ATPRFEE; Initial Catalog=TasksDB;user id=meuxdev;password=meuxdev;");
 
 var app = builder.Build();
 
