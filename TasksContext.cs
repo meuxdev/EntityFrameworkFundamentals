@@ -8,7 +8,7 @@ public class TasksContext : DbContext
 {
     public DbSet<Category> Categories { get; set; }
 
-    public DbSet<TodoTask> TodoTasks { get; set; }
+    public DbSet<TodoTask> Tasks { get; set; }
 
     public TasksContext(DbContextOptions<TasksContext> options) : base(options) { }
 }
