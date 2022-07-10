@@ -11,4 +11,24 @@ public class TasksContext : DbContext
     public DbSet<TodoTask> Tasks { get; set; }
 
     public TasksContext(DbContextOptions<TasksContext> options) : base(options) { }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        // Fluent API
+        // Predomina sobre los data notations 
+        // debido a que el model builder es ejecutado hasta el final.
+        modelBuilder.Entity<Category>(category => {
+            category.ToTable("Category");
+            category.HasKey(p => p.CategoryId);
+            category.Property(p => p.Name).IsRequired().HasMaxLength(150);
+            category.Property(p => p.Description);
+        });
+
+
+        // modelBuilder.Entity<Task>(task => {
+        //     task.ToTable("TodoTasks");
+        //     task.HasKey(p =>  p/)
+            
+        // });
+    }
 }
