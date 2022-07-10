@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 // builder.Services.AddDbContext<TasksContext>(opt => opt.UseInMemoryDatabase("TasksDB"));
 
 // Config SQLserver
-builder.Services.AddSqlServer<TasksContext>("Data Source=DESKTOP-ATPRFEE; Initial Catalog=TasksDB;user id=meuxdev;password=meuxdev;");
+builder.Services.AddSqlServer<TasksContext>(builder.Configuration.GetConnectionString("SQLTasksDB"));
 
 var app = builder.Build();
 
@@ -17,7 +17,7 @@ app.MapGet("/", () => "Hello World!");
 
 app.MapGet("/dbconnection", async ([FromServices] TasksContext dbContext) =>
 {
-    dbContext.Database.EnsureCreated();
+    dbContext.Database.EnsureCreated();// runs the commands to create the db. 
     return Results.Ok($"DB in memory successfully: {dbContext.Database.IsInMemory()}");
 });
 
