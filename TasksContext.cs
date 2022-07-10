@@ -24,11 +24,25 @@ public class TasksContext : DbContext
             category.Property(p => p.Description);
         });
 
+        modelBuilder.Entity<TodoTask>(task => {
+            task.ToTable("Task");
+            task.HasKey(t => t.TaskId);
 
-        // modelBuilder.Entity<Task>(task => {
-        //     task.ToTable("TodoTasks");
-        //     task.HasKey(p =>  p/)
+            // Foreign Key
+            task.HasOne(t => t.Category) // public virtual Category Category { get; set; }
+                .WithMany(c => c.Tasks) // task method
+                .HasForeignKey(t => t.CategoryId);
+        
+            task.Property(t => t.Title).IsRequired().HasMaxLength(200);
+        
+            task.Property(t => t.Description);
+
+            task.Property(t => t.Priority);
+
+            task.Property(t => t.CreatedAt);
             
-        // });
+        });
+        
+            
     }
 }
