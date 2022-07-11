@@ -41,6 +41,7 @@ public class TasksContext : DbContext
 
             task.Property(t => t.CreatedAt);
             
+            task.Ignore(t => t.Summary);
         });
         
             
