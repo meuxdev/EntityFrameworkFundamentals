@@ -11,8 +11,24 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Config SQLserver
 builder.Services.AddSqlServer<TasksContext>(builder.Configuration.GetConnectionString("SQLTasksDB"));
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    // app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+        options.RoutePrefix = string.Empty;
+        // options.SerializeAsV2 = true;
+    });
+}
+
+
 
 app.MapGet("/", () => "Hello World!");
 
@@ -27,15 +43,14 @@ app.MapGet("/api/tasks", async ([FromServices] TasksContext dbContext ) => {
 });
 
 app.MapPost("/api/tasks", async ([FromServices] TasksContext dbContext, [FromBody] TodoTask task) => {
-    var newTask = new TodoTask();
-    newTask.CreatedAt = DateTime.Now;
+    
 
-    await dbContext.AddAsync(newTask);
+    await dbContext.AddAsync(task);
     // await dbContext.Tasks.AddAsync(newTask);
 
     await dbContext.SaveChangesAsync();
 
-    return Results.Created("/created", newTask);
+    return Results.Created("/created", task);
 
 });
 

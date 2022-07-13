@@ -11,7 +11,10 @@ public class TodoTask
 
     // [ForeignKey("CategoryId")]
     public Guid CategoryId { get; init; }
+
     public Guid AuthorId { get; init; }
+
+    public DateTime CreatedAt { get; set; }
 
     // [Required]
     // [MaxLength(200)]
@@ -20,14 +23,13 @@ public class TodoTask
     public string Description { get; set; }
 
     public Priority Priority { get; set; }
+    public bool Completed { get; set; }
 
-    public DateTime CreatedAt { get; set; }
 
-    public virtual Category Category { get; set; }
+    public virtual Category Category { get; init; }
 
     public virtual Author Author { get; set; }
 
-    public bool Completed { get; set; }
 
 
     // [NotMapped] // does not add this column to the table -> no mapping the attribute

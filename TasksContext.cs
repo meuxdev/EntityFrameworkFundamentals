@@ -107,7 +107,9 @@ public class TasksContext : DbContext
                 .WithMany(a => a.Tasks)
                 .HasForeignKey(t => t.AuthorId);
 
-            task.Property(t => t.Title).IsRequired().HasMaxLength(200);
+            task.Property(t => t.Title)
+                .IsRequired()
+                .HasMaxLength(200);
 
             task.Property(t => t.Description);
 
