@@ -9,7 +9,8 @@ public class TodoTask
     public Guid TaskId { get; init; }
 
     // [ForeignKey("CategoryId")]
-    public Guid CategoryId { get; private set; }
+    public Guid CategoryId { get; init; }
+    public Guid AuthorId { get; init; }
 
     // [Required]
     // [MaxLength(200)]
@@ -23,7 +24,10 @@ public class TodoTask
 
     public virtual Category Category { get; set; }
 
+    public virtual Author Author { get; set; }
+
     public bool Completed { get; set; }
+
 
     // [NotMapped] // does not add this column to the table -> no mapping the attribute
     public string Summary { get; set; }

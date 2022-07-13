@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using projectef;
 
@@ -11,9 +12,10 @@ using projectef;
 namespace projectef.Migrations
 {
     [DbContext(typeof(TasksContext))]
-    partial class TasksContextModelSnapshot : ModelSnapshot
+    [Migration("20220713065201_InitialData")]
+    partial class InitialData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,50 +23,6 @@ namespace projectef.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("projectef.Models.Author", b =>
-                {
-                    b.Property<Guid>("AuthorId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<long>("Age")
-                        .HasMaxLength(120)
-                        .HasColumnType("bigint");
-
-                    b.Property<float>("Height")
-                        .HasColumnType("real");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<float>("Weight")
-                        .HasMaxLength(2)
-                        .HasColumnType("real");
-
-                    b.HasKey("AuthorId");
-
-                    b.ToTable("Author", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            AuthorId = new Guid("5e48e5cd-0850-48f2-9b3b-572f82f0ba91"),
-                            Age = 24L,
-                            Height = 1.75f,
-                            Name = "Alejandro",
-                            Weight = 80.2f
-                        },
-                        new
-                        {
-                            AuthorId = new Guid("656fe592-6dd1-4108-b492-c014f1faefdc"),
-                            Age = 40L,
-                            Height = 1.8f,
-                            Name = "Josh",
-                            Weight = 95.3f
-                        });
-                });
 
             modelBuilder.Entity("projectef.Models.Category", b =>
                 {
@@ -111,9 +69,6 @@ namespace projectef.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AuthorId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
@@ -137,8 +92,6 @@ namespace projectef.Migrations
 
                     b.HasKey("TaskId");
 
-                    b.HasIndex("AuthorId");
-
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Task", (string)null);
@@ -147,10 +100,9 @@ namespace projectef.Migrations
                         new
                         {
                             TaskId = new Guid("b4c54026-ec34-439d-bb61-b3e4c1cb3399"),
-                            AuthorId = new Guid("5e48e5cd-0850-48f2-9b3b-572f82f0ba91"),
                             CategoryId = new Guid("5f617470-bf19-4be4-9fea-f26a18bf616a"),
                             Completed = false,
-                            CreatedAt = new DateTime(2022, 7, 13, 2, 23, 37, 742, DateTimeKind.Local).AddTicks(5646),
+                            CreatedAt = new DateTime(2022, 7, 13, 1, 52, 1, 440, DateTimeKind.Local).AddTicks(8325),
                             Description = "This is a random Task to do, this is just some random description",
                             Priority = 2,
                             Title = "Review the payment for the school."
@@ -158,10 +110,9 @@ namespace projectef.Migrations
                         new
                         {
                             TaskId = new Guid("b4c54026-ec34-439d-bb61-b3e4c1cb4499"),
-                            AuthorId = new Guid("656fe592-6dd1-4108-b492-c014f1faefdc"),
                             CategoryId = new Guid("5f617470-bf20-4be4-9fea-f26a18bf616a"),
                             Completed = false,
-                            CreatedAt = new DateTime(2022, 7, 13, 2, 23, 37, 742, DateTimeKind.Local).AddTicks(5686),
+                            CreatedAt = new DateTime(2022, 7, 13, 1, 52, 1, 440, DateTimeKind.Local).AddTicks(8367),
                             Description = "This is a random Task to do, this is just some random description",
                             Priority = 0,
                             Title = "Finish Stranger things Season 4"
@@ -170,26 +121,13 @@ namespace projectef.Migrations
 
             modelBuilder.Entity("projectef.Models.TodoTask", b =>
                 {
-                    b.HasOne("projectef.Models.Author", "Author")
-                        .WithMany("Tasks")
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("projectef.Models.Category", "Category")
                         .WithMany("Tasks")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Author");
-
                     b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("projectef.Models.Author", b =>
-                {
-                    b.Navigation("Tasks");
                 });
 
             modelBuilder.Entity("projectef.Models.Category", b =>

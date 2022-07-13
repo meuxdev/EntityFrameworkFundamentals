@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using projectef;
 
@@ -11,9 +12,10 @@ using projectef;
 namespace projectef.Migrations
 {
     [DbContext(typeof(TasksContext))]
-    partial class TasksContextModelSnapshot : ModelSnapshot
+    [Migration("20220713071920_AuthorInit")]
+    partial class AuthorInit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,16 +34,16 @@ namespace projectef.Migrations
                         .HasMaxLength(120)
                         .HasColumnType("bigint");
 
-                    b.Property<float>("Height")
-                        .HasColumnType("real");
+                    b.Property<double>("Height")
+                        .HasColumnType("float");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float>("Weight")
+                    b.Property<double>("Weight")
                         .HasMaxLength(2)
-                        .HasColumnType("real");
+                        .HasColumnType("float");
 
                     b.HasKey("AuthorId");
 
@@ -52,17 +54,17 @@ namespace projectef.Migrations
                         {
                             AuthorId = new Guid("5e48e5cd-0850-48f2-9b3b-572f82f0ba91"),
                             Age = 24L,
-                            Height = 1.75f,
+                            Height = 1.75,
                             Name = "Alejandro",
-                            Weight = 80.2f
+                            Weight = 80.0
                         },
                         new
                         {
                             AuthorId = new Guid("656fe592-6dd1-4108-b492-c014f1faefdc"),
                             Age = 40L,
-                            Height = 1.8f,
+                            Height = 1.8,
                             Name = "Josh",
-                            Weight = 95.3f
+                            Weight = 95.0
                         });
                 });
 
@@ -150,7 +152,7 @@ namespace projectef.Migrations
                             AuthorId = new Guid("5e48e5cd-0850-48f2-9b3b-572f82f0ba91"),
                             CategoryId = new Guid("5f617470-bf19-4be4-9fea-f26a18bf616a"),
                             Completed = false,
-                            CreatedAt = new DateTime(2022, 7, 13, 2, 23, 37, 742, DateTimeKind.Local).AddTicks(5646),
+                            CreatedAt = new DateTime(2022, 7, 13, 2, 19, 20, 256, DateTimeKind.Local).AddTicks(7036),
                             Description = "This is a random Task to do, this is just some random description",
                             Priority = 2,
                             Title = "Review the payment for the school."
@@ -161,7 +163,7 @@ namespace projectef.Migrations
                             AuthorId = new Guid("656fe592-6dd1-4108-b492-c014f1faefdc"),
                             CategoryId = new Guid("5f617470-bf20-4be4-9fea-f26a18bf616a"),
                             Completed = false,
-                            CreatedAt = new DateTime(2022, 7, 13, 2, 23, 37, 742, DateTimeKind.Local).AddTicks(5686),
+                            CreatedAt = new DateTime(2022, 7, 13, 2, 19, 20, 256, DateTimeKind.Local).AddTicks(7084),
                             Description = "This is a random Task to do, this is just some random description",
                             Priority = 0,
                             Title = "Finish Stranger things Season 4"
