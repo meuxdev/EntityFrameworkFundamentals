@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using projectef;
+using projectef.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,19 @@ app.MapGet("/dbconnection", async ([FromServices] TasksContext dbContext) =>
 
 app.MapGet("/api/tasks", async ([FromServices] TasksContext dbContext ) => {
     return Results.Ok(dbContext.Tasks.Include(p => p.Category).Include(p => p.Author).Where(p => p.Priority == projectef.Models.Priority.Low));
+});
+
+app.MapPost("/api/tasks", async ([FromServices] TasksContext dbContext, [FromBody] TodoTask task) => {
+    var newTask = new TodoTask();
+    newTask.CreatedAt = DateTime.Now;
+
+    await dbContext.AddAsync(newTask);
+    // await dbContext.Tasks.AddAsync(newTask);
+
+    await dbContext.SaveChangesAsync();
+
+    return Results.Created("/created", newTask);
+
 });
 
 app.MapGet("/api/categories", async ([FromServices] TasksContext dbContext ) => {
