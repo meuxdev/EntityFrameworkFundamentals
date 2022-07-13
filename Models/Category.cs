@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace projectef.Models;
 
@@ -16,6 +17,7 @@ public class Category
 
     public int Importance{ get; set; }
 
+    [JsonIgnore]
     public virtual ICollection<TodoTask> Tasks { get; set; }
 
 }

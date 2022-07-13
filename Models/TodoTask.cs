@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace projectef.Models;
 
@@ -30,6 +31,7 @@ public class TodoTask
 
 
     // [NotMapped] // does not add this column to the table -> no mapping the attribute
+    [JsonIgnore]
     public string Summary { get; set; }
 }
 

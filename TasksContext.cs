@@ -10,6 +10,8 @@ public class TasksContext : DbContext
 
     public DbSet<TodoTask> Tasks { get; set; }
 
+    public DbSet<Author> Authors { get; set; }
+
     public TasksContext(DbContextOptions<TasksContext> options) : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
