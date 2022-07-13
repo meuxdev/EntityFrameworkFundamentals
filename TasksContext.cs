@@ -41,6 +41,8 @@ public class TasksContext : DbContext
             task.Property(t => t.Priority);
 
             task.Property(t => t.CreatedAt);
+
+            task.Property(t => t.Completed);
             
             task.Ignore(t => t.Summary);
         });

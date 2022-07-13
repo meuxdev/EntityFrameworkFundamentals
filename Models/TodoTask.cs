@@ -23,6 +23,8 @@ public class TodoTask
 
     public virtual Category Category { get; set; }
 
+    public bool Completed { get; set; }
+
     // [NotMapped] // does not add this column to the table -> no mapping the attribute
     public string Summary { get; set; }
 }
