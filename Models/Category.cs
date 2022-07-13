@@ -14,6 +14,8 @@ public class Category
 
     public string Description { get; set; }
 
+    public int Importance{ get; set; }
+
     public virtual ICollection<TodoTask> Tasks { get; set; }
 
 }
