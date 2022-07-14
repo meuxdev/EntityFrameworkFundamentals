@@ -10,7 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 // builder.Services.AddDbContext<TasksContext>(opt => opt.UseInMemoryDatabase("TasksDB"));
 
 // Config SQLserver
-builder.Services.AddSqlServer<TasksContext>(builder.Configuration.GetConnectionString("SQLTasksDB"));
+// builder.Services.AddSqlServer<TasksContext>(builder.Configuration.GetConnectionString("SQLTasksDB"));
+
+builder.Services.AddSqlServer<TasksContext>(builder.Configuration.GetConnectionString("SQLDockerDB"));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
