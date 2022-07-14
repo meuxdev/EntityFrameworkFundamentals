@@ -87,16 +87,15 @@ app.MapDelete("api/tasks/{id}", async (
     [FromRoute] Guid id
 ) => 
 {
-    TodoTask currentTask = dbContext.Tasks.Find(id);
+    TodoTask task = dbContext.Tasks.Find(id);
 
-    if(currentTask != null)
-    {
-        dbContext.Remove(currentTask);
-        await dbContext.SaveChangesAsync();
-        return Results.Ok();
-    }
+    if(task == null)
+        return Results.NotFound();
 
-    return Results.NotFound();
+    dbContext.Remove(task);
+    await dbContext.SaveChangesAsync();
+    return Results.Ok("Deleted!!");
+
 });
 
 app.MapGet("/api/categories", async ([FromServices] TasksContext dbContext) =>
