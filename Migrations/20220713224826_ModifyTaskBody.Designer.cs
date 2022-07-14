@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using projectef;
 
@@ -11,9 +12,10 @@ using projectef;
 namespace projectef.Migrations
 {
     [DbContext(typeof(TasksContext))]
-    partial class TasksContextModelSnapshot : ModelSnapshot
+    [Migration("20220713224826_ModifyTaskBody")]
+    partial class ModifyTaskBody
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -117,23 +119,8 @@ namespace projectef.Migrations
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("Completed")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Priority")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("TaskId");
 
@@ -149,22 +136,14 @@ namespace projectef.Migrations
                             TaskId = new Guid("b4c54026-ec34-439d-bb61-b3e4c1cb3399"),
                             AuthorId = new Guid("5e48e5cd-0850-48f2-9b3b-572f82f0ba91"),
                             CategoryId = new Guid("5f617470-bf19-4be4-9fea-f26a18bf616a"),
-                            Completed = false,
-                            CreatedAt = new DateTime(2022, 7, 13, 18, 27, 18, 60, DateTimeKind.Local).AddTicks(692),
-                            Description = "This is a random Task to do, this is just some random description",
-                            Priority = 2,
-                            Title = "Review the payment for the school."
+                            CreatedAt = new DateTime(2022, 7, 13, 17, 48, 25, 990, DateTimeKind.Local).AddTicks(8064)
                         },
                         new
                         {
                             TaskId = new Guid("b4c54026-ec34-439d-bb61-b3e4c1cb4499"),
                             AuthorId = new Guid("656fe592-6dd1-4108-b492-c014f1faefdc"),
                             CategoryId = new Guid("5f617470-bf20-4be4-9fea-f26a18bf616a"),
-                            Completed = false,
-                            CreatedAt = new DateTime(2022, 7, 13, 18, 27, 18, 60, DateTimeKind.Local).AddTicks(748),
-                            Description = "This is a random Task to do, this is just some random description",
-                            Priority = 0,
-                            Title = "Finish Stranger things Season 4"
+                            CreatedAt = new DateTime(2022, 7, 13, 17, 48, 25, 990, DateTimeKind.Local).AddTicks(8102)
                         });
                 });
 

@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace projectef.Models;
@@ -10,25 +8,31 @@ public class TodoTask
     public Guid TaskId { get; init; }
 
     // [ForeignKey("CategoryId")]
-    public Guid CategoryId { get; init; }
+    public Guid CategoryId { get; set; }
 
-    public Guid AuthorId { get; init; }
+    public Guid AuthorId { get; set; }
 
     public DateTime CreatedAt { get; set; }
+
+    // public TodoTaskBody TodoTaskBody { get; set; }
+
 
     // [Required]
     // [MaxLength(200)]
     public string Title { get; set; }
 
+    // [Required]
     public string Description { get; set; }
 
+    // [Required]
     public Priority Priority { get; set; }
+
+    // [Required]
     public bool Completed { get; set; }
 
+    public virtual Author Author { get; set; }
 
     public virtual Category Category { get; init; }
-
-    public virtual Author Author { get; set; }
 
 
 

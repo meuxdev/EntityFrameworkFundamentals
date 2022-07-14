@@ -38,27 +38,57 @@ app.MapGet("/dbconnection", async ([FromServices] TasksContext dbContext) =>
     return Results.Ok($"DB in memory successfully: {dbContext.Database.IsInMemory()}");
 });
 
-app.MapGet("/api/tasks", async ([FromServices] TasksContext dbContext ) => {
-    return Results.Ok(dbContext.Tasks.Include(p => p.Category).Include(p => p.Author).Where(p => p.Priority == projectef.Models.Priority.Low));
+app.MapGet("/api/tasks/low", async ([FromServices] TasksContext dbContext) =>
+{
+    return Results.Ok(dbContext.Tasks.Include(p => p.Category).Include(p => p.Author).Where(p => p.Priority == Priority.Low));
+
 });
 
-app.MapPost("/api/tasks", async ([FromServices] TasksContext dbContext, [FromBody] TodoTask task) => {
-    
+app.MapGet("/api/tasks", async ([FromServices] TasksContext dbContext) =>
+{
+    return Results.Ok(dbContext.Tasks.Include(p => p.Category).Include(p => p.Author));
+});
 
+app.MapPost("/api/tasks", async ([FromServices] TasksContext dbContext, [FromBody] TodoTask task) =>
+{
     await dbContext.AddAsync(task);
     // await dbContext.Tasks.AddAsync(newTask);
-
     await dbContext.SaveChangesAsync();
-
     return Results.Created("/created", task);
-
 });
 
-app.MapGet("/api/categories", async ([FromServices] TasksContext dbContext ) => {
+app.MapPut("api/tasks/{id}", async (
+    [FromServices] TasksContext dbContext,
+    [FromBody] TodoTask task,
+    [FromRoute] Guid id
+) =>
+{
+    // Default looks for the key
+    var currentTask = dbContext.Tasks.Find(id);
+
+    if (currentTask != null)
+    {
+        currentTask.CategoryId = task.CategoryId;
+        currentTask.AuthorId = task.AuthorId;
+        currentTask.Title = task.Title;
+        currentTask.Priority = task.Priority;
+        currentTask.Description = task.Description;
+        currentTask.Completed = task.Completed;
+
+        await dbContext.SaveChangesAsync();
+        return Results.Ok();
+    }
+
+    return Results.NotFound();
+});
+
+app.MapGet("/api/categories", async ([FromServices] TasksContext dbContext) =>
+{
     return Results.Ok(dbContext.Categories);
 });
 
-app.MapGet("/api/authors", async ([FromServices] TasksContext dbContext ) => {
+app.MapGet("/api/authors", async ([FromServices] TasksContext dbContext) =>
+{
     return Results.Ok(dbContext.Authors);
 });
 

@@ -46,8 +46,8 @@ public class TasksContext : DbContext
             Priority = Priority.High,
             Title = "Review the payment for the school.",
             Description = "This is a random Task to do, this is just some random description",
-            CreatedAt = DateTime.Now,
             Completed = false,
+            CreatedAt = DateTime.Now,
             AuthorId = Guid.Parse("5e48e5cd-0850-48f2-9b3b-572f82f0ba91")
         });
 
@@ -59,9 +59,9 @@ public class TasksContext : DbContext
             AuthorId = Guid.Parse("656fe592-6dd1-4108-b492-c014f1faefdc"),
             Priority = Priority.Low,
             Title = "Finish Stranger things Season 4",
+            Completed = false,
             Description = "This is a random Task to do, this is just some random description",
             CreatedAt = DateTime.Now,
-            Completed = false
         });
 
         var authorsInit = new List<Author>();
@@ -93,6 +93,10 @@ public class TasksContext : DbContext
             category.HasData(categoriesInit);
         });
 
+
+        // modelBuilder.Entity<TodoTaskBody>().HasNoKey();
+
+
         modelBuilder.Entity<TodoTask>(task =>
         {
             task.ToTable("Task");
@@ -111,7 +115,8 @@ public class TasksContext : DbContext
                 .IsRequired()
                 .HasMaxLength(200);
 
-            task.Property(t => t.Description);
+            // task.HasOne(t => t.TodoTaskBody);
+            // task.Property<TodoTaskBody>(t => t.TodoTaskBody);
 
             task.Property(t => t.Priority);
 
@@ -121,7 +126,16 @@ public class TasksContext : DbContext
 
             task.Ignore(t => t.Summary);
 
+            // task.Property(t => t.TodoTaskBody).Hasn
+            // task.Property<TodoTaskBody>(t => t.TodoTaskBody);
+
+
+            // Ignore working data notations
+            // task.Ignore(t => t.TodoTaskBody);
+
             task.HasData(tasksInit);
+
+
         });
 
 
